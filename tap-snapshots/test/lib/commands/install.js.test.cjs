@@ -12,8 +12,8 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_305Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_305Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 verbose stack Error: The developer of this package has specified the following through devEngines
 verbose stack Invalid engine "runtime"
@@ -38,8 +38,8 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_240Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_240Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 warn EBADDEVENGINES The developer of this package has specified the following through devEngines
 warn EBADDEVENGINES Invalid engine "runtime"
@@ -59,8 +59,7 @@ silly idealTree buildDeps
 silly reify moves {}
 silly audit report null
 
-up to date, audited 1 package in 26ms
-
+up to date, audited 1 package in {TIME}
 found 0 vulnerabilities
 `
 
@@ -71,8 +70,8 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_401Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_401Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 warn EBADDEVENGINES The developer of this package has specified the following through devEngines
 warn EBADDEVENGINES Invalid engine "cpu"
@@ -104,8 +103,8 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_111Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_111Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 verbose stack Error: The developer of this package has specified the following through devEngines
 verbose stack Invalid engine "runtime"
@@ -130,8 +129,8 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false" "--force" "true"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_176Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_176Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 warn using --force Recommended protections disabled.
 silly logfile done cleaning log files
 warn EBADDEVENGINES The developer of this package has specified the following through devEngines
@@ -146,8 +145,7 @@ silly idealTree buildDeps
 silly reify moves {}
 silly audit report null
 
-up to date, audited 1 package in 26ms
-
+up to date, audited 1 package in {TIME}
 found 0 vulnerabilities
 `
 
@@ -158,15 +156,14 @@ silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
 verbose title npm
 verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
-verbose logfile logs-max:10 dir:{CWD}/cache/_logs/2024-09-05T20_09_54_039Z-
-verbose logfile {CWD}/cache/_logs/2024-09-05T20_09_54_039Z-debug-0.log
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 silly idealTree buildDeps
 silly reify moves {}
 silly audit report null
 
-up to date, audited 1 package in 31ms
-
+up to date, audited 1 package in {TIME}
 found 0 vulnerabilities
 `
