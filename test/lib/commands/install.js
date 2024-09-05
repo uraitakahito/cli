@@ -400,3 +400,104 @@ t.test('should show install keeps dirty --workspace flag', async t => {
   assert.packageDirty('node_modules/abbrev@1.1.0')
   assert.packageInstalled('node_modules/lodash@1.1.1')
 })
+
+t.test('should utilize devEngines success case', async t => {
+  const { npm } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'node',
+          },
+        },
+      }),
+    },
+  })
+  await npm.exec('install', [])
+})
+
+t.test('should utilize devEngines failure case', async t => {
+  const { npm } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+          },
+        },
+      }),
+    },
+  })
+  await t.rejects(
+    npm.exec('install', [])
+  )
+})
+
+t.test('should utilize devEngines 2x warning case', async t => {
+  const { npm } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+            onFail: 'warn',
+          },
+          cpu: {
+            name: 'risv',
+            onFail: 'warn',
+          },
+        },
+      }),
+    },
+  })
+  npm.exec('install', [])
+})
+
+t.test('should utilize devEngines failure and warning case', async t => {
+  const { npm } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+          },
+          cpu: {
+            name: 'risv',
+            onFail: 'warn',
+          },
+        },
+      }),
+    },
+  })
+  await t.rejects(
+    npm.exec('install', [])
+  )
+})
+
+t.test('should utilize devEngines failure case', async t => {
+  const { npm } = await loadMockNpm(t, {
+    config: {
+      force: true,
+    },
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+          },
+        },
+      }),
+    },
+  })
+  npm.exec('install', [])
+})
