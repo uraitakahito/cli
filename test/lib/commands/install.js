@@ -1,7 +1,10 @@
 const tspawk = require('../../fixtures/tspawk')
+const { cleanCwd } = require('../../fixtures/clean-snapshot.js')
 
 const path = require('node:path')
 const t = require('tap')
+
+t.cleanSnapshot = (str) => cleanCwd(str)
 
 const {
   loadNpmWithRegistry: loadMockNpm,
@@ -402,7 +405,7 @@ t.test('should show install keeps dirty --workspace flag', async t => {
 })
 
 t.test('should utilize devEngines success case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -416,11 +419,11 @@ t.test('should utilize devEngines success case', async t => {
     },
   })
   await npm.exec('install', [])
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
 
 t.test('should utilize devEngines failure case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -436,11 +439,11 @@ t.test('should utilize devEngines failure case', async t => {
   await t.rejects(
     npm.exec('install', [])
   )
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
 
 t.test('should utilize devEngines failure force case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     config: {
       force: true,
     },
@@ -457,11 +460,11 @@ t.test('should utilize devEngines failure force case', async t => {
     },
   })
   await npm.exec('install', [])
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
 
 t.test('should utilize devEngines 2x warning case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -480,11 +483,11 @@ t.test('should utilize devEngines 2x warning case', async t => {
     },
   })
   await npm.exec('install', [])
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
 
 t.test('should utilize devEngines 2x error case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -505,11 +508,11 @@ t.test('should utilize devEngines 2x error case', async t => {
   await t.rejects(
     npm.exec('install', [])
   )
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
 
 t.test('should utilize devEngines failure and warning case', async t => {
-  const { npm, fullOutput } = await loadMockNpm(t, {
+  const { npm, joinedFullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -529,5 +532,5 @@ t.test('should utilize devEngines failure and warning case', async t => {
   await t.rejects(
     npm.exec('install', [])
   )
-  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+  t.matchSnapshot(joinedFullOutput())
 })
