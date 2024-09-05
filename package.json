@@ -1,5 +1,5 @@
 {
-  "version": "10.8.2",
+  "version": "10.8.2-devengines",
   "name": "npm",
   "description": "a package manager for JavaScript",
   "workspaces": [
@@ -96,7 +96,7 @@
     "nopt": "^7.2.1",
     "normalize-package-data": "^6.0.2",
     "npm-audit-report": "^5.0.0",
-    "npm-install-checks": "^6.3.0",
+    "npm-install-checks": "github:npm/npm-install-checks#reggi/dev-engines",
     "npm-package-arg": "^11.0.2",
     "npm-pick-manifest": "^9.1.0",
     "npm-profile": "^10.0.0",
