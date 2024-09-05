@@ -402,7 +402,7 @@ t.test('should show install keeps dirty --workspace flag', async t => {
 })
 
 t.test('should utilize devEngines success case', async t => {
-  const { npm } = await loadMockNpm(t, {
+  const { npm, fullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -416,10 +416,11 @@ t.test('should utilize devEngines success case', async t => {
     },
   })
   await npm.exec('install', [])
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
 })
 
 t.test('should utilize devEngines failure case', async t => {
-  const { npm } = await loadMockNpm(t, {
+  const { npm, fullOutput } = await loadMockNpm(t, {
     prefixDir: {
       'package.json': JSON.stringify({
         name: 'test-package',
@@ -435,55 +436,11 @@ t.test('should utilize devEngines failure case', async t => {
   await t.rejects(
     npm.exec('install', [])
   )
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
 })
 
-t.test('should utilize devEngines 2x warning case', async t => {
-  const { npm } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
-            onFail: 'warn',
-          },
-          cpu: {
-            name: 'risv',
-            onFail: 'warn',
-          },
-        },
-      }),
-    },
-  })
-  npm.exec('install', [])
-})
-
-t.test('should utilize devEngines failure and warning case', async t => {
-  const { npm } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
-          },
-          cpu: {
-            name: 'risv',
-            onFail: 'warn',
-          },
-        },
-      }),
-    },
-  })
-  await t.rejects(
-    npm.exec('install', [])
-  )
-})
-
-t.test('should utilize devEngines failure case', async t => {
-  const { npm } = await loadMockNpm(t, {
+t.test('should utilize devEngines failure force case', async t => {
+  const { npm, fullOutput } = await loadMockNpm(t, {
     config: {
       force: true,
     },
@@ -499,5 +456,78 @@ t.test('should utilize devEngines failure case', async t => {
       }),
     },
   })
-  npm.exec('install', [])
+  await npm.exec('install', [])
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+})
+
+t.test('should utilize devEngines 2x warning case', async t => {
+  const { npm, fullOutput } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+            onFail: 'warn',
+          },
+          cpu: {
+            name: 'risv',
+            onFail: 'warn',
+          },
+        },
+      }),
+    },
+  })
+  await npm.exec('install', [])
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+})
+
+t.test('should utilize devEngines 2x error case', async t => {
+  const { npm, fullOutput } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+            onFail: 'error',
+          },
+          cpu: {
+            name: 'risv',
+            onFail: 'error',
+          },
+        },
+      }),
+    },
+  })
+  await t.rejects(
+    npm.exec('install', [])
+  )
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
+})
+
+t.test('should utilize devEngines failure and warning case', async t => {
+  const { npm, fullOutput } = await loadMockNpm(t, {
+    prefixDir: {
+      'package.json': JSON.stringify({
+        name: 'test-package',
+        version: '1.0.0',
+        devEngines: {
+          runtime: {
+            name: 'nondescript',
+          },
+          cpu: {
+            name: 'risv',
+            onFail: 'warn',
+          },
+        },
+      }),
+    },
+  })
+  await t.rejects(
+    npm.exec('install', [])
+  )
+  t.matchSnapshot(fullOutput.filter(v => v.match(/^(error|warn)/)).join('\n'))
 })
