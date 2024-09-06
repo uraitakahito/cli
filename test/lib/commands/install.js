@@ -404,133 +404,147 @@ t.test('should show install keeps dirty --workspace flag', async t => {
   assert.packageInstalled('node_modules/lodash@1.1.1')
 })
 
-t.test('should utilize devEngines success case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'node',
-          },
-        },
-      }),
-    },
-  })
-  await npm.exec('install', [])
-  t.matchSnapshot(joinedFullOutput())
-})
+t.test('devEngines', async t => {
+  const globals = {
+    'process.platform': 'linux',
+    'process.arch': 'x86',
+    'process.version': 'v1337.0.0',
+  }
 
-t.test('should utilize devEngines failure case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
+  t.test('should utilize devEngines success case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'node',
+            },
           },
-        },
-      }),
-    },
+        }),
+      },
+    })
+    await npm.exec('install', [])
+    t.matchSnapshot(joinedFullOutput())
   })
-  await t.rejects(
-    npm.exec('install', [])
-  )
-  t.matchSnapshot(joinedFullOutput())
-})
 
-t.test('should utilize devEngines failure force case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    config: {
-      force: true,
-    },
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
+  t.test('should utilize devEngines failure case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'nondescript',
+            },
           },
-        },
-      }),
-    },
+        }),
+      },
+    })
+    await t.rejects(
+      npm.exec('install', [])
+    )
+    t.matchSnapshot(joinedFullOutput())
   })
-  await npm.exec('install', [])
-  t.matchSnapshot(joinedFullOutput())
-})
 
-t.test('should utilize devEngines 2x warning case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
-            onFail: 'warn',
+  t.test('should utilize devEngines failure force case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      config: {
+        force: true,
+      },
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'nondescript',
+            },
           },
-          cpu: {
-            name: 'risv',
-            onFail: 'warn',
-          },
-        },
-      }),
-    },
+        }),
+      },
+    })
+    await npm.exec('install', [])
+    t.matchSnapshot(joinedFullOutput())
   })
-  await npm.exec('install', [])
-  t.matchSnapshot(joinedFullOutput())
-})
 
-t.test('should utilize devEngines 2x error case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
-            onFail: 'error',
+  t.test('should utilize devEngines 2x warning case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'nondescript',
+              onFail: 'warn',
+            },
+            cpu: {
+              name: 'risv',
+              onFail: 'warn',
+            },
           },
-          cpu: {
-            name: 'risv',
-            onFail: 'error',
-          },
-        },
-      }),
-    },
+        }),
+      },
+    })
+    await npm.exec('install', [])
+    t.matchSnapshot(joinedFullOutput())
   })
-  await t.rejects(
-    npm.exec('install', [])
-  )
-  t.matchSnapshot(joinedFullOutput())
-})
 
-t.test('should utilize devEngines failure and warning case', async t => {
-  const { npm, joinedFullOutput } = await loadMockNpm(t, {
-    prefixDir: {
-      'package.json': JSON.stringify({
-        name: 'test-package',
-        version: '1.0.0',
-        devEngines: {
-          runtime: {
-            name: 'nondescript',
+  t.test('should utilize devEngines 2x error case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'nondescript',
+              onFail: 'error',
+            },
+            cpu: {
+              name: 'risv',
+              onFail: 'error',
+            },
           },
-          cpu: {
-            name: 'risv',
-            onFail: 'warn',
-          },
-        },
-      }),
-    },
+        }),
+      },
+    })
+    await t.rejects(
+      npm.exec('install', [])
+    )
+    t.matchSnapshot(joinedFullOutput())
   })
-  await t.rejects(
-    npm.exec('install', [])
-  )
-  t.matchSnapshot(joinedFullOutput())
+
+  t.test('should utilize devEngines failure and warning case', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'test-package',
+          version: '1.0.0',
+          devEngines: {
+            runtime: {
+              name: 'nondescript',
+            },
+            cpu: {
+              name: 'risv',
+              onFail: 'warn',
+            },
+          },
+        }),
+      },
+    })
+    await t.rejects(
+      npm.exec('install', [])
+    )
+    t.matchSnapshot(joinedFullOutput())
+  })
 })
