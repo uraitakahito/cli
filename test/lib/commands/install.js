@@ -1,10 +1,15 @@
 const tspawk = require('../../fixtures/tspawk')
-const { cleanCwd, cleanTime, cleanDate } = require('../../fixtures/clean-snapshot.js')
+const {
+  cleanCwd,
+  cleanTime,
+  cleanDate,
+  cleanPackumentCache,
+} = require('../../fixtures/clean-snapshot.js')
 
 const path = require('node:path')
 const t = require('tap')
 
-t.cleanSnapshot = (str) => cleanDate(cleanTime(cleanCwd(str)))
+t.cleanSnapshot = (str) => cleanPackumentCache(cleanDate(cleanTime(cleanCwd(str))))
 
 const {
   loadNpmWithRegistry: loadMockNpm,
