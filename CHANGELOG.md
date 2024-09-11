@@ -1,5 +1,11 @@
 # Changelog
 
+## [10.8.4](https://github.com/npm/cli/compare/v10.8.3...v10.8.4) (2024-09-11)
+### Documentation
+* [`366c07e`](https://github.com/npm/cli/commit/366c07e2f3cb9d1c6ddbd03e624a4d73fbd2676e) [#7776](https://github.com/npm/cli/pull/7776) remove incorrect note about npm install (#7776) (@wraithgar)
+### Chores
+* [`fefd509`](https://github.com/npm/cli/commit/fefd509992a05c2dfddbe7bc46931c42f1da69d7) [#7764](https://github.com/npm/cli/pull/7764) deps: bump actions/download-artifact from 3 to 4 in /.github/workflows (#7764) (@dependabot[bot], @wraithgar)
+
 ## [10.8.3](https://github.com/npm/cli/compare/v10.8.2...v10.8.3) (2024-08-28)
 ### Bug Fixes
 * [`7e61151`](https://github.com/npm/cli/commit/7e61151b9ab4f62a83e9ea8bcfa15ece11b6a1fd) [#7759](https://github.com/npm/cli/pull/7759) docs: init usage description corrected (#7759) (@milaninfy)
