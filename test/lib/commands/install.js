@@ -552,4 +552,41 @@ t.test('devEngines', async t => {
     )
     t.matchSnapshot(joinedFullOutput())
   })
+
+  await t.test('should show devEngines has no effect on package install', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        alpha: {
+          'package.json': JSON.stringify({
+            name: 'alpha',
+            devEngines: { runtime: { name: 'node', version: '1.0.0' } },
+          }),
+          'index.js': 'console.log("this is alpha index")',
+        },
+      },
+      config: { global: true },
+    })
+    await npm.exec('install', ['./alpha'])
+    t.matchSnapshot(joinedFullOutput())
+  })
+
+  await t.test('should show devEngines doesnt break engines', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      globals,
+      prefixDir: {
+        alpha: {
+          'package.json': JSON.stringify({
+            name: 'alpha',
+            devEngines: { runtime: { name: 'node', version: '1.0.0' } },
+            engines: { node: '1.0.0' },
+          }),
+          'index.js': 'console.log("this is alpha index")',
+        },
+      },
+      config: { global: true },
+    })
+    await npm.exec('install', ['./alpha'])
+    t.matchSnapshot(joinedFullOutput())
+  })
 })

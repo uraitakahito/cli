@@ -5,6 +5,52 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test/lib/commands/install.js TAP devEngines should show devEngines doesnt break engines > must match snapshot 1`] = `
+silly config load:file:{CWD}/npmrc
+silly config load:file:{CWD}/home/.npmrc
+silly config load:file:{CWD}/global/etc/npmrc
+verbose title npm
+verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false" "--global" "true"
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
+silly logfile done cleaning log files
+silly packumentCache heap:{heap} maxSize:{maxSize} maxEntrySize:{maxEntrySize}
+silly idealTree buildDeps
+silly placeDep ROOT alpha@ OK for:  want: file:../../prefix/alpha
+warn EBADENGINE Unsupported engine {
+warn EBADENGINE   package: undefined,
+warn EBADENGINE   required: { node: '1.0.0' },
+warn EBADENGINE   current: { node: 'v1337.0.0', npm: '10.8.3' }
+warn EBADENGINE }
+warn EBADENGINE Unsupported engine {
+warn EBADENGINE   package: undefined,
+warn EBADENGINE   required: { node: '1.0.0' },
+warn EBADENGINE   current: { node: 'v1337.0.0', npm: '10.8.3' }
+warn EBADENGINE }
+silly reify moves {}
+silly ADD node_modules/alpha
+
+added 1 package in {TIME}
+`
+
+exports[`test/lib/commands/install.js TAP devEngines should show devEngines has no effect on install > must match snapshot 1`] = `
+silly config load:file:{CWD}/npmrc
+silly config load:file:{CWD}/home/.npmrc
+silly config load:file:{CWD}/global/etc/npmrc
+verbose title npm
+verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false" "--global" "true"
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
+silly logfile done cleaning log files
+silly packumentCache heap:{heap} maxSize:{maxSize} maxEntrySize:{maxEntrySize}
+silly idealTree buildDeps
+silly placeDep ROOT alpha@ OK for:  want: file:../../prefix/alpha
+silly reify moves {}
+silly ADD node_modules/alpha
+
+added 1 package in {TIME}
+`
+
 exports[`test/lib/commands/install.js TAP devEngines should utilize devEngines 2x error case > must match snapshot 1`] = `
 silly config load:file:{CWD}/npmrc
 silly config load:file:{CWD}/prefix/.npmrc
