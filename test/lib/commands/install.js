@@ -410,15 +410,20 @@ t.test('should show install keeps dirty --workspace flag', async t => {
 })
 
 t.test('devEngines', async t => {
-  const globals = {
-    'process.platform': 'linux',
-    'process.arch': 'x86',
-    'process.version': 'v1337.0.0',
+  const mockArguments = {
+    globals: {
+      'process.platform': 'linux',
+      'process.arch': 'x86',
+      'process.version': 'v1337.0.0',
+    },
+    mocks: {
+      '{ROOT}/package.json': { version: '42.0.0' },
+    },
   }
 
   t.test('should utilize devEngines success case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -437,7 +442,7 @@ t.test('devEngines', async t => {
 
   t.test('should utilize devEngines failure case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -458,10 +463,10 @@ t.test('devEngines', async t => {
 
   t.test('should utilize devEngines failure force case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      ...mockArguments,
       config: {
         force: true,
       },
-      globals,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -480,7 +485,7 @@ t.test('devEngines', async t => {
 
   t.test('should utilize devEngines 2x warning case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -504,7 +509,7 @@ t.test('devEngines', async t => {
 
   t.test('should utilize devEngines 2x error case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -530,7 +535,7 @@ t.test('devEngines', async t => {
 
   t.test('should utilize devEngines failure and warning case', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         'package.json': JSON.stringify({
           name: 'test-package',
@@ -555,7 +560,7 @@ t.test('devEngines', async t => {
 
   await t.test('should show devEngines has no effect on package install', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         alpha: {
           'package.json': JSON.stringify({
@@ -564,8 +569,33 @@ t.test('devEngines', async t => {
           }),
           'index.js': 'console.log("this is alpha index")',
         },
+        'package.json': JSON.stringify({
+          name: 'project',
+        }),
       },
-      config: { global: true },
+    })
+    await npm.exec('install', ['./alpha'])
+    t.matchSnapshot(joinedFullOutput())
+  })
+
+  await t.test('should show devEngines has no effect on dev package install', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      ...mockArguments,
+      prefixDir: {
+        alpha: {
+          'package.json': JSON.stringify({
+            name: 'alpha',
+            devEngines: { runtime: { name: 'node', version: '1.0.0' } },
+          }),
+          'index.js': 'console.log("this is alpha index")',
+        },
+        'package.json': JSON.stringify({
+          name: 'project',
+        }),
+      },
+      config: {
+        'save-dev': true,
+      },
     })
     await npm.exec('install', ['./alpha'])
     t.matchSnapshot(joinedFullOutput())
@@ -573,7 +603,7 @@ t.test('devEngines', async t => {
 
   await t.test('should show devEngines doesnt break engines', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
-      globals,
+      ...mockArguments,
       prefixDir: {
         alpha: {
           'package.json': JSON.stringify({
@@ -583,6 +613,9 @@ t.test('devEngines', async t => {
           }),
           'index.js': 'console.log("this is alpha index")',
         },
+        'package.json': JSON.stringify({
+          name: 'project',
+        }),
       },
       config: { global: true },
     })
