@@ -33,7 +33,7 @@ silly ADD node_modules/alpha
 added 1 package in {TIME}
 `
 
-exports[`test/lib/commands/install.js TAP devEngines should show devEngines has no effect on install > must match snapshot 1`] = `
+exports[`test/lib/commands/install.js TAP devEngines should show devEngines has no effect on package install > must match snapshot 1`] = `
 silly config load:file:{CWD}/npmrc
 silly config load:file:{CWD}/home/.npmrc
 silly config load:file:{CWD}/global/etc/npmrc
