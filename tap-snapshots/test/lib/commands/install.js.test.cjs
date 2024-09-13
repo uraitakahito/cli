@@ -5,6 +5,32 @@
  * Make sure to inspect the output below.  Do not ignore changes!
  */
 'use strict'
+exports[`test/lib/commands/install.js TAP devEngines should not utilize engines in root if devEngines is provided > must match snapshot 1`] = `
+silly config load:file:{CWD}/npmrc
+silly config load:file:{CWD}/prefix/.npmrc
+silly config load:file:{CWD}/home/.npmrc
+silly config load:file:{CWD}/global/etc/npmrc
+verbose title npm
+verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
+silly logfile done cleaning log files
+warn EBADDEVENGINES The developer of this package has specified the following through devEngines
+warn EBADDEVENGINES Invalid engine "runtime"
+warn EBADDEVENGINES Invalid semver version "0.0.1" does not match "v1337.0.0" for "runtime"
+warn EBADDEVENGINES {
+warn EBADDEVENGINES   current: { name: 'node', version: 'v1337.0.0' },
+warn EBADDEVENGINES   required: { name: 'node', version: '0.0.1', onFail: 'warn' }
+warn EBADDEVENGINES }
+silly packumentCache heap:{heap} maxSize:{maxSize} maxEntrySize:{maxEntrySize}
+silly idealTree buildDeps
+silly reify moves {}
+silly audit report null
+
+up to date, audited 1 package in {TIME}
+found 0 vulnerabilities
+`
+
 exports[`test/lib/commands/install.js TAP devEngines should show devEngines doesnt break engines > must match snapshot 1`] = `
 silly config load:file:{CWD}/npmrc
 silly config load:file:{CWD}/home/.npmrc
@@ -233,6 +259,30 @@ verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
 silly logfile done cleaning log files
 silly packumentCache heap:{heap} maxSize:{maxSize} maxEntrySize:{maxEntrySize}
 silly idealTree buildDeps
+silly reify moves {}
+silly audit report null
+
+up to date, audited 1 package in {TIME}
+found 0 vulnerabilities
+`
+
+exports[`test/lib/commands/install.js TAP devEngines should utilize engines in root if devEngines is not provided > must match snapshot 1`] = `
+silly config load:file:{CWD}/npmrc
+silly config load:file:{CWD}/prefix/.npmrc
+silly config load:file:{CWD}/home/.npmrc
+silly config load:file:{CWD}/global/etc/npmrc
+verbose title npm
+verbose argv "--fetch-retries" "0" "--cache" "{CWD}/cache" "--loglevel" "silly" "--color" "false"
+verbose logfile logs-max:10 dir:{CWD}/cache/_logs/{DATE}-
+verbose logfile {CWD}/cache/_logs/{DATE}-debug-0.log
+silly logfile done cleaning log files
+silly packumentCache heap:{heap} maxSize:{maxSize} maxEntrySize:{maxEntrySize}
+silly idealTree buildDeps
+warn EBADENGINE Unsupported engine {
+warn EBADENGINE   package: undefined,
+warn EBADENGINE   required: { node: '0.0.1' },
+warn EBADENGINE   current: { node: 'v1337.0.0', npm: '42.0.0' }
+warn EBADENGINE }
 silly reify moves {}
 silly audit report null
 

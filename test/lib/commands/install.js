@@ -437,7 +437,9 @@ t.test('devEngines', async t => {
       },
     })
     await npm.exec('install', [])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(!output.includes('EBADDEVENGINES'))
   })
 
   t.test('should utilize devEngines failure case', async t => {
@@ -458,7 +460,9 @@ t.test('devEngines', async t => {
     await t.rejects(
       npm.exec('install', [])
     )
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('error EBADDEVENGINES'))
   })
 
   t.test('should utilize devEngines failure force case', async t => {
@@ -480,7 +484,9 @@ t.test('devEngines', async t => {
       },
     })
     await npm.exec('install', [])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('warn EBADDEVENGINES'))
   })
 
   t.test('should utilize devEngines 2x warning case', async t => {
@@ -504,7 +510,9 @@ t.test('devEngines', async t => {
       },
     })
     await npm.exec('install', [])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('warn EBADDEVENGINES'))
   })
 
   t.test('should utilize devEngines 2x error case', async t => {
@@ -530,7 +538,9 @@ t.test('devEngines', async t => {
     await t.rejects(
       npm.exec('install', [])
     )
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('error EBADDEVENGINES'))
   })
 
   t.test('should utilize devEngines failure and warning case', async t => {
@@ -555,10 +565,12 @@ t.test('devEngines', async t => {
     await t.rejects(
       npm.exec('install', [])
     )
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('EBADDEVENGINES'))
   })
 
-  await t.test('should show devEngines has no effect on package install', async t => {
+  t.test('should show devEngines has no effect on package install', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
       ...mockArguments,
       prefixDir: {
@@ -575,10 +587,12 @@ t.test('devEngines', async t => {
       },
     })
     await npm.exec('install', ['./alpha'])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(!output.includes('EBADDEVENGINES'))
   })
 
-  await t.test('should show devEngines has no effect on dev package install', async t => {
+  t.test('should show devEngines has no effect on dev package install', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
       ...mockArguments,
       prefixDir: {
@@ -598,10 +612,12 @@ t.test('devEngines', async t => {
       },
     })
     await npm.exec('install', ['./alpha'])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(!output.includes('EBADDEVENGINES'))
   })
 
-  await t.test('should show devEngines doesnt break engines', async t => {
+  t.test('should show devEngines doesnt break engines', async t => {
     const { npm, joinedFullOutput } = await loadMockNpm(t, {
       ...mockArguments,
       prefixDir: {
@@ -620,6 +636,55 @@ t.test('devEngines', async t => {
       config: { global: true },
     })
     await npm.exec('install', ['./alpha'])
-    t.matchSnapshot(joinedFullOutput())
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('warn EBADENGINE'))
+  })
+
+  t.test('should not utilize engines in root if devEngines is provided', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      ...mockArguments,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'alpha',
+          engines: {
+            node: '0.0.1',
+          },
+          devEngines: {
+            runtime: {
+              name: 'node',
+              version: '0.0.1',
+              onFail: 'warn',
+            },
+          },
+        }),
+        'index.js': 'console.log("this is alpha index")',
+      },
+    })
+    await npm.exec('install')
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(!output.includes('EBADENGINE'))
+    t.ok(output.includes('warn EBADDEVENGINES'))
+  })
+
+  t.test('should utilize engines in root if devEngines is not provided', async t => {
+    const { npm, joinedFullOutput } = await loadMockNpm(t, {
+      ...mockArguments,
+      prefixDir: {
+        'package.json': JSON.stringify({
+          name: 'alpha',
+          engines: {
+            node: '0.0.1',
+          },
+        }),
+        'index.js': 'console.log("this is alpha index")',
+      },
+    })
+    await npm.exec('install')
+    const output = joinedFullOutput()
+    t.matchSnapshot(output)
+    t.ok(output.includes('EBADENGINE'))
+    t.ok(!output.includes('EBADDEVENGINES'))
   })
 })
