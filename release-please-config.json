@@ -46,7 +46,6 @@
     "workspaces/libnpmdiff": {},
     "workspaces/libnpmexec": {},
     "workspaces/libnpmfund": {},
-    "workspaces/libnpmhook": {},
     "workspaces/libnpmorg": {},
     "workspaces/libnpmpack": {},
     "workspaces/libnpmpublish": {},
@@ -54,7 +53,7 @@
     "workspaces/libnpmteam": {},
     "workspaces/libnpmversion": {}
   },
-  "prerelease": false,
+  "prerelease": true,
   "group-pull-request-title-pattern": "chore: release ${version}",
   "pull-request-title-pattern": "chore: release${component} ${version}",
   "prerelease-type": "pre"

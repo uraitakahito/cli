@@ -119,7 +119,6 @@ Array [
   "get",
   "help",
   "help-search",
-  "hook",
   "init",
   "install",
   "install-ci-test",
@@ -3200,33 +3199,6 @@ Note: This command is unaware of workspaces.
 #### \`long\`
 `
 
-exports[`test/lib/docs.js TAP usage hook > must match snapshot 1`] = `
-Manage registry hooks
-
-Usage:
-npm hook add <pkg> <url> <secret> [--type=<type>]
-npm hook ls [pkg]
-npm hook rm <id>
-npm hook update <id> <url> <secret>
-
-Options:
-[--registry <registry>] [--otp <otp>]
-
-Run "npm help hook" for more info
-
-\`\`\`bash
-npm hook add <pkg> <url> <secret> [--type=<type>]
-npm hook ls [pkg]
-npm hook rm <id>
-npm hook update <id> <url> <secret>
-\`\`\`
-
-Note: This command is unaware of workspaces.
-
-#### \`registry\`
-#### \`otp\`
-`
-
 exports[`test/lib/docs.js TAP usage init > must match snapshot 1`] = `
 Create a package.json file
 
@@ -3708,7 +3680,7 @@ npm pack <package-spec>
 Options:
 [--dry-run] [--json] [--pack-destination <pack-destination>]
 [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
-[-ws|--workspaces] [--include-workspace-root]
+[-ws|--workspaces] [--include-workspace-root] [--ignore-scripts]
 
 Run "npm help pack" for more info
 
@@ -3722,6 +3694,7 @@ npm pack <package-spec>
 #### \`workspace\`
 #### \`workspaces\`
 #### \`include-workspace-root\`
+#### \`ignore-scripts\`
 `
 
 exports[`test/lib/docs.js TAP usage ping > must match snapshot 1`] = `

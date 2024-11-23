@@ -24,6 +24,7 @@
 !/CODE_OF_CONDUCT.md
 !/configure
 !/CONTRIBUTING.md
+!/DEPENDENCIES.json
 !/DEPENDENCIES.md
 !/docker-entrypoint.sh
 !/Dockerfile
@@ -57,7 +58,6 @@ tap-testdir*/
 !/workspaces/libnpmdiff/
 !/workspaces/libnpmexec/
 !/workspaces/libnpmfund/
-!/workspaces/libnpmhook/
 !/workspaces/libnpmorg/
 !/workspaces/libnpmpack/
 !/workspaces/libnpmpublish/
