@@ -4,6 +4,17 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "npm create vite@latest",
+      // program - an absolute path to the Node.js program to debug.
+      "program": "${workspaceFolder}/index.js",
+      // Command line arguments passed to the program
+      "args": ["create", "vite@latest"],
+      // break immediately when the program launches
+      "stopOnEntry": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "run selected file",
       "skipFiles": ["<node_internals>/**"],
       // program - an absolute path to the Node.js program to debug.
@@ -18,9 +29,7 @@
       "request": "attach",
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-    },
+      "skipFiles": ["<node_internals>/**"]
+    }
   ]
 }
