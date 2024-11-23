@@ -10,6 +10,8 @@
       // ${file} - the currently open file.
       "program": "${file}",
       // "cwd": "${workspaceFolder}/examples/express",
+      // break immediately when the program launches
+      "stopOnEntry": true
     },
     {
       "type": "node",
