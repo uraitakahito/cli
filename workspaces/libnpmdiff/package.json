@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@npmcli/eslint-config": "^5.0.1",
-    "@npmcli/template-oss": "4.23.3",
+    "@npmcli/template-oss": "4.30.0",
     "tap": "^16.3.8"
   },
   "dependencies": {
@@ -54,7 +54,7 @@
     "minimatch": "^9.0.4",
     "npm-package-arg": "^12.0.0",
     "pacote": "^20.0.0",
-    "tar": "^6.2.1"
+    "tar": "^7.5.22"
   },
   "templateOSS": {
     "//@npmcli/template-oss": "This file is partially managed by @npmcli/template-oss. Edits may be overwritten.",
